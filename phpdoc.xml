@@ -13,7 +13,6 @@
 	<files>
 		<directory>src</directory>
 		<directory>test</directory>
-		<directory>tutorials</directory>
 	</files>
 	<transformations>
 		<template name="responsive-twig"/>
