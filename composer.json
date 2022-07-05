@@ -21,15 +21,13 @@
 	],
 	"license" : "GPL-2.0",
 	"require" : {
-		"php" : ">=7.1.0"
+		"php": "^7.4 || ^8.0",
+		"ext-gd" : "*",
+		"ext-exif" : "*"
 	},
 	"require-dev" : {
-		"ext-gd" : "*",
-		"ext-exif" : "*",
-		"squizlabs/php_codesniffer" : ">3.5",
-		"php-coveralls/php-coveralls" : ">2.4",
-		"symfony/phpunit-bridge" : "^4 || ^5 || ^6",
-		"phpstan/phpstan": "^1.4"
+		"phpunit/phpunit": "^9.5",
+		"phan/phan": "^5.3"
 	},
 	"autoload" : {
 		"psr-4" : {
@@ -40,5 +38,14 @@
 		"psr-4" : {
 			"Pel\\Test\\" : "test/"
 		}
+	},
+	"scripts": {
+		"phpunit": "@php vendor/bin/phpunit",
+		"phan": "@php vendor/bin/phan"
+	},
+	"config": {
+		"lock": false,
+		"sort-packages": true,
+		"platform-check": true
 	}
 }
