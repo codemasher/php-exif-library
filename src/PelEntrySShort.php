@@ -737,6 +737,8 @@ class PelEntrySShort extends PelEntryNumber
      *            range of a signed short, that is between -32768 to 32767
      *            (inclusive). If not, then a {@link PelOverFlowException} will be
      *            thrown.
+     *
+     * @phan-suppress PhanMismatchVariadicParam
      */
     public function __construct(int $tag, ...$value)
     {

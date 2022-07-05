@@ -81,6 +81,7 @@ class PelEntryRational extends PelEntryLong
      *
      * @throws PelOverflowException
      * @noinspection PhpMissingParentConstructorInspection
+     * @phan-suppress PhanMismatchVariadicParam
      */
     public function __construct(int $tag, ...$value)
     {

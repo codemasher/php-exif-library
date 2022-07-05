@@ -67,6 +67,8 @@ class PelEntrySLong extends PelEntryNumber
      *            be within range of a signed long (32 bit), that is between
      *            -2147483648 and 2147483647 (inclusive). If not, then a {@link
      *            PelOverflowException} will be thrown.
+     *
+     * @phan-suppress PhanMismatchVariadicParam
      */
     public function __construct(int $tag, ...$value)
     {

@@ -67,6 +67,8 @@ class PelEntrySByte extends PelEntryNumber
      *            {@link setValue}, namely that it should be within range of a
      *            signed byte, that is between -128 and 127 (inclusive). If not,
      *            then a {@link PelOverflowException} will be thrown.
+     *
+     * @phan-suppress PhanMismatchVariadicParam
      */
     public function __construct(int $tag, ...$value)
     {

@@ -67,6 +67,8 @@ class PelEntryByte extends PelEntryNumber
      *            {@link setValue}, namely that it should be within range of an
      *            unsigned byte, that is between 0 and 255 (inclusive). If not,
      *            then a {@link PelOverflowException} will be thrown.
+     *
+     * @phan-suppress PhanMismatchVariadicParam
      */
     public function __construct(int $tag, ...$value)
     {

@@ -70,6 +70,7 @@ class PelEntrySRational extends PelEntrySLong
      *            PelOverflowException} will be thrown.
      *
      * @noinspection PhpMissingParentConstructorInspection
+     * @phan-suppress PhanMismatchVariadicParam
      */
     public function __construct(int $tag, ...$value)
     {
