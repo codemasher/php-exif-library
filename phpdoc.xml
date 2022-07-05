@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+	<parser>
+		<target>doc</target>
+		<encoding>utf8</encoding>
+		<markers>
+			<item>TODO</item>
+		</markers>
+	</parser>
+	<transformer>
+		<target>doc</target>
+	</transformer>
+	<files>
+		<directory>src</directory>
+		<directory>test</directory>
+		<directory>tutorials</directory>
+	</files>
+	<transformations>
+		<template name="responsive-twig"/>
+	</transformations>
+</phpdoc>
