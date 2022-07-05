@@ -78,7 +78,7 @@ class PelEntryLong extends PelEntryNumber
      *            should be one of the constants defined in {@link PelTag},
      *            e.g., {@link PelTag::IMAGE_WIDTH}, or any other tag which can
      *            have format {@link PelFormat::LONG}.
-     * @param ...$value
+     * @param $value (variadic)
      *            the long(s) that this entry will
      *            represent or an array of longs. The argument passed must obey
      *            the same rules as the argument to {@link setValue}, namely that
