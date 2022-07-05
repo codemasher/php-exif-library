@@ -730,7 +730,7 @@ class PelEntrySShort extends PelEntryNumber
      *            the tag which this entry represents. This
      *            should be one of the constants defined in {@link PelTag}
      *            which has format {@link PelFormat::SSHORT}.
-     * @param int $value...
+     * @param ...$value
      *            the signed short(s) that this entry will
      *            represent. The argument passed must obey the same rules as the
      *            argument to {@link setValue}, namely that it should be within
@@ -738,15 +738,13 @@ class PelEntrySShort extends PelEntryNumber
      *            (inclusive). If not, then a {@link PelOverFlowException} will be
      *            thrown.
      */
-    public function __construct($tag, $value = null)
+    public function __construct(int $tag, ...$value)
     {
         $this->tag = $tag;
         $this->min = - 32768;
         $this->max = 32767;
         $this->format = PelFormat::SSHORT;
 
-        $value = func_get_args();
-        array_shift($value);
         $this->setValueArray($value);
     }
 
@@ -760,7 +758,7 @@ class PelEntrySShort extends PelEntryNumber
      *            {@link PelConvert::BIG_ENDIAN}, specifying the target byte order.
      * @return string bytes representing the number given.
      */
-    public function numberToBytes($number, $order)
+    public function numberToBytes(int $number, bool $order):string
     {
         return PelConvert::sShortToBytes($number, $order);
     }
@@ -778,7 +776,7 @@ class PelEntrySShort extends PelEntryNumber
      *            brief form, and this parameter controls that.
      * @return string the value as text.
      */
-    public function getText($brief = false)
+    public function getText(bool $brief = false):string
     {
         if (array_key_exists($this->ifd_type, self::TRANSLATIONS) && array_key_exists($this->tag, self::TRANSLATIONS[$this->ifd_type])) {
             $val = $this->value[0];

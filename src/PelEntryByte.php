@@ -61,22 +61,20 @@ class PelEntryByte extends PelEntryNumber
      *            the tag which this entry represents. This
      *            should be one of the constants defined in {@link PelTag}
      *            which has format {@link PelFormat::BYTE}.
-     * @param int $value...
+     * @param ...$value
      *            the byte(s) that this entry will represent.
      *            The argument passed must obey the same rules as the argument to
      *            {@link setValue}, namely that it should be within range of an
      *            unsigned byte, that is between 0 and 255 (inclusive). If not,
      *            then a {@link PelOverflowException} will be thrown.
      */
-    public function __construct($tag, $value = null)
+    public function __construct(int $tag, ...$value)
     {
         $this->tag = $tag;
         $this->min = 0;
         $this->max = 255;
         $this->format = PelFormat::BYTE;
 
-        $value = func_get_args();
-        array_shift($value);
         $this->setValueArray($value);
     }
 
@@ -85,7 +83,7 @@ class PelEntryByte extends PelEntryNumber
      * {@inheritdoc}
      * @see \lsolesen\pel\PelEntryNumber::numberToBytes()
      */
-    public function numberToBytes($number, $order)
+    public function numberToBytes(int $number, bool $order):string
     {
         return chr($number);
     }

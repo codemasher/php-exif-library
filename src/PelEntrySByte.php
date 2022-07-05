@@ -61,22 +61,20 @@ class PelEntrySByte extends PelEntryNumber
      *            the tag which this entry represents. This
      *            should be one of the constants defined in {@link PelTag}
      *            which has format {@link PelFormat::BYTE}.
-     * @param int $value...
+     * @param ...$value
      *            the byte(s) that this entry will represent.
      *            The argument passed must obey the same rules as the argument to
      *            {@link setValue}, namely that it should be within range of a
      *            signed byte, that is between -128 and 127 (inclusive). If not,
      *            then a {@link PelOverflowException} will be thrown.
      */
-    public function __construct($tag, $value = null)
+    public function __construct(int $tag, ...$value)
     {
         $this->tag = $tag;
         $this->min = - 128;
         $this->max = 127;
         $this->format = PelFormat::SBYTE;
 
-        $value = func_get_args();
-        array_shift($value);
         $this->setValueArray($value);
     }
 
@@ -90,7 +88,7 @@ class PelEntrySByte extends PelEntryNumber
      *            {@link PelConvert::BIG_ENDIAN}, specifying the target byte order.
      * @return string bytes representing the number given.
      */
-    public function numberToBytes($number, $order)
+    public function numberToBytes(int $number, bool $order):string
     {
         return chr($number);
     }

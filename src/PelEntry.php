@@ -63,7 +63,7 @@
  */
 namespace lsolesen\pel;
 
-abstract class PelEntry
+abstract class PelEntry implements PelEntryInterface
 {
 
     /**
@@ -77,7 +77,7 @@ abstract class PelEntry
      *
      * @var int
      */
-    protected $ifd_type;
+    protected int $ifd_type = -1;
 
     /**
      * The bytes representing this entry.
@@ -88,156 +88,81 @@ abstract class PelEntry
      *
      * @var string
      */
-    protected $bytes = '';
+    protected string $bytes = '';
 
     /**
      * The {@link PelTag} of this entry.
      *
      * @var int
      */
-    protected $tag;
+    protected int $tag;
 
     /**
      * The {@link PelFormat} of this entry.
      *
      * @var int
      */
-    protected $format;
+    protected int $format;
 
     /**
      * The number of components of this entry.
      *
      * @var int
      */
-    protected $components;
+    protected int $components;
 
     /**
-     * Return the tag of this entry.
-     *
-     * @return int the tag of this entry.
+     * @inheritDoc
      */
-    public function getTag()
+    public function getTag():int
     {
         return $this->tag;
     }
 
     /**
-     * Return the type of IFD which holds this entry.
-     *
-     * @return int one of the constants defined in {@link PelIfd}:
-     *         {@link PelIfd::IFD0} for the main image IFD, {@link PelIfd::IFD1}
-     *         for the thumbnail image IFD, {@link PelIfd::EXIF} for the Exif
-     *         sub-IFD, {@link PelIfd::GPS} for the GPS sub-IFD, or {@link
-     *         PelIfd::INTEROPERABILITY} for the interoperability sub-IFD.
+     * @inheritDoc
      */
-    public function getIfdType()
+    public function getIfdType():int
     {
         return $this->ifd_type;
     }
 
     /**
-     * Update the IFD type.
-     *
-     * @param int $type
-     *            must be one of the constants defined in {@link
-     *            PelIfd}: {@link PelIfd::IFD0} for the main image IFD, {@link
-     *            PelIfd::IFD1} for the thumbnail image IFD, {@link PelIfd::EXIF}
-     *            for the Exif sub-IFD, {@link PelIfd::GPS} for the GPS sub-IFD, or
-     *            {@link PelIfd::INTEROPERABILITY} for the interoperability
-     *            sub-IFD.
+     * @inheritDoc
      */
-    public function setIfdType($type)
+    public function setIfdType(int $type):void
     {
         $this->ifd_type = $type;
     }
 
     /**
-     * Return the format of this entry.
-     *
-     * @return int the format of this entry.
+     * @inheritDoc
      */
-    public function getFormat()
+    public function getFormat():int
     {
         return $this->format;
     }
 
     /**
-     * Return the number of components of this entry.
-     *
-     * @return int the number of components of this entry.
+     * @inheritDoc
      */
-    public function getComponents()
+    public function getComponents():int
     {
         return $this->components;
     }
 
     /**
-     * Turn this entry into bytes.
-     *
-     * @param boolean $o
-     *            the desired byte order, which must be either
-     *            {@link Convert::LITTLE_ENDIAN} or {@link Convert::BIG_ENDIAN}.
-     * @return string bytes representing this entry.
+     * @inheritDoc
      */
-    public function getBytes($o)
+    public function getBytes(bool $o):string
     {
         return $this->bytes;
     }
 
     /**
-     * Get the value of this entry as text.
-     *
-     * The value will be returned in a format suitable for presentation,
-     * e.g., rationals will be returned as 'x/y', ASCII strings will be
-     * returned as themselves etc.
-     *
-     * @param boolean $brief
-     *            some values can be returned in a long or more
-     *            brief form, and this parameter controls that.
-     * @return string the value as text.
+     * @inheritDoc
      */
-    abstract public function getText($brief = false);
-
-    /**
-     * Get the value of this entry.
-     *
-     * The value returned will generally be the same as the one supplied
-     * to the constructor or with {@link setValue()}. For a formatted
-     * version of the value, one should use {@link getText()} instead.
-     *
-     * @return mixed the unformatted value.
-     */
-    abstract public function getValue();
-
-    /**
-     * Set the value of this entry.
-     *
-     * The value should be in the same format as for the constructor.
-     *
-     * @param mixed $value
-     *            the new value.
-     * @abstract
-     *
-     */
-    public function setValue($value)
-    {
-        /*
-         * This (fake) abstract method is here to make it possible for the
-         * documentation to refer to PelEntry::setValue().
-         * It cannot declared abstract in the proper PHP way, for then PHP
-         * wont allow subclasses to define it with two arguments (which is
-         * what PelEntryCopyright does).
-         */
-        throw new PelException('setValue() is abstract.');
-    }
-
-    /**
-     * Turn this entry into a string.
-     *
-     * @return string a string representation of this entry. This is
-     *         mostly for debugging.
-     */
-    public function __toString()
+    public function __toString():string
     {
         $str = Pel::fmt("  Tag: 0x%04X (%s)\n", $this->tag, PelTag::getName($this->ifd_type, $this->tag));
         $str .= Pel::fmt("    Format    : %d (%s)\n", $this->format, PelFormat::getName($this->format));

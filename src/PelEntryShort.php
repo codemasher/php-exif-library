@@ -322,7 +322,7 @@ class PelEntryShort extends PelEntryNumber
      *            one of the constants defined in {@link PelTag}, e.g., {@link
      *            PelTag::IMAGE_WIDTH}, {@link PelTag::ISO_SPEED_RATINGS},
      *            or any other tag with format {@link PelFormat::SHORT}.
-     * @param integer $value...
+     * @param ...$value
      *            the short(s) that this entry will
      *            represent. The argument passed must obey the same rules as the
      *            argument to {@link setValue}, namely that it should be within
@@ -330,15 +330,13 @@ class PelEntryShort extends PelEntryNumber
      *            (inclusive). If not, then a {@link PelOverFlowException} will be
      *            thrown.
      */
-    public function __construct($tag, $value = null)
+    public function __construct(int $tag, ...$value)
     {
         $this->tag = $tag;
         $this->min = 0;
         $this->max = 65535;
         $this->format = PelFormat::SHORT;
 
-        $value = func_get_args();
-        array_shift($value);
         $this->setValueArray($value);
     }
 
@@ -352,7 +350,7 @@ class PelEntryShort extends PelEntryNumber
      *            {@link PelConvert::BIG_ENDIAN}, specifying the target byte order.
      * @return string bytes representing the number given.
      */
-    public function numberToBytes($number, $order)
+    public function numberToBytes(int $number, bool $order):string
     {
         return PelConvert::shortToBytes($number, $order);
     }
@@ -370,12 +368,12 @@ class PelEntryShort extends PelEntryNumber
      *            brief form, and this parameter controls that.
      * @return string the value as text.
      */
-    public function getText($brief = false)
+    public function getText(bool $brief = false):string
     {
         if (array_key_exists($this->ifd_type, self::IFD_TYPE_TRANSLATIONS)) {
             if (array_key_exists($this->value[0], self::IFD_TYPE_TRANSLATIONS[$this->ifd_type])) {
-                return Pel::tra(self::IFD_TYPE_TRANSLATIONS[$this->ifd_type][$this->value[0]]);
-            } else {
+#                return Pel::tra(self::IFD_TYPE_TRANSLATIONS[$this->ifd_type][$this->value[0]]); // @todo: array key missing
+#            } else {
                 return $this->value[0];
             }
         } elseif ($this->tag === PelTag::YCBCR_SUB_SAMPLING) {

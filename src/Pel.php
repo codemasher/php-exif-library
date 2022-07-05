@@ -42,10 +42,8 @@ class Pel
     /**
      * Flag that controls if dgettext can be used.
      * Is set to true or fals at the first access
-     *
-     * @var boolean|NULL
      */
-    private static $hasdgetext = null;
+    private static ?bool $hasdgetext = null;
 
     /**
      * Flag for controlling debug information.
@@ -53,10 +51,8 @@ class Pel
      * The methods producing debug information ({@link debug()} and
      * {@link warning()}) will only output something if this variable is
      * set to true.
-     *
-     * @var boolean
      */
-    private static $debug = false;
+    private static bool $debug = false;
 
     /**
      * Flag for strictness of parsing.
@@ -69,10 +65,8 @@ class Pel
      * Some errors will still be fatal and result in thrown exceptions,
      * but an effort will be made to skip over as much garbage as
      * possible.
-     *
-     * @var boolean
      */
-    private static $strict = false;
+    private static bool $strict = false;
 
     /**
      * Stored exceptions.
@@ -80,7 +74,7 @@ class Pel
      * When {@link Pel::$strict} is set to false exceptions will be
      * accumulated here instead of being thrown.
      */
-    private static $exceptions = [];
+    private static array $exceptions = [];
 
     /**
      * Quality setting for encoding JPEG images.
@@ -91,10 +85,8 @@ class Pel
      *
      * The default is 75 for average quality images, but you can change
      * this to an integer between 0 and 100.
-     *
-     * @var int
      */
-    private static $quality = 75;
+    private static int $quality = 75;
 
     /**
      * Set the JPEG encoding quality.
@@ -103,7 +95,7 @@ class Pel
      *            an integer between 0 and 100 with 75 being
      *            average quality and 95 very good quality.
      */
-    public static function setJPEGQuality($quality)
+    public static function setJPEGQuality(int $quality):void
     {
         self::$quality = $quality;
     }
@@ -113,7 +105,7 @@ class Pel
      *
      * @return int the quality.
      */
-    public static function getJPEGQuality()
+    public static function getJPEGQuality():int
     {
         return self::$quality;
     }
@@ -150,7 +142,7 @@ class Pel
      *
      * @return array the exceptions.
      */
-    public static function getExceptions()
+    public static function getExceptions():array
     {
         return self::$exceptions;
     }
@@ -161,7 +153,7 @@ class Pel
      * Use this function before a call to some method if you intend to
      * check for exceptions afterwards.
      */
-    public static function clearExceptions()
+    public static function clearExceptions():void
     {
         self::$exceptions = [];
     }
@@ -178,7 +170,7 @@ class Pel
      * @param PelException $e
      *            the exceptions.
      */
-    public static function maybeThrow(PelException $e)
+    public static function maybeThrow(PelException $e):void
     {
         if (self::$strict) {
             throw $e;
@@ -205,7 +197,7 @@ class Pel
      *            use true to enable strict parsing, false to
      *            diable.
      */
-    public static function setStrictParsing($flag)
+    public static function setStrictParsing(bool $flag):void
     {
         self::$strict = $flag;
     }
@@ -216,7 +208,7 @@ class Pel
      * @return boolean true if strict parsing is in effect, false
      *         otherwise.
      */
-    public static function getStrictParsing()
+    public static function getStrictParsing():bool
     {
         return self::$strict;
     }
@@ -228,7 +220,7 @@ class Pel
      *            use true to enable debug output, false to
      *            diable.
      */
-    public static function setDebug($flag)
+    public static function setDebug(bool $flag):void
     {
         self::$debug = $flag;
     }
@@ -238,7 +230,7 @@ class Pel
      *
      * @return boolean true if debug is enabled, false otherwise.
      */
-    public static function getDebug()
+    public static function getDebug():bool
     {
         return self::$debug;
     }
@@ -256,7 +248,7 @@ class Pel
      *            arguments will be available for the format string as usual with
      *            sprintf().
      */
-    public static function debug($format, ...$args)
+    public static function debug(string $format, ...$args):void
     {
         if (self::$debug) {
             vprintf($format . "\n", $args);
@@ -277,7 +269,7 @@ class Pel
      *            arguments will be available for the format string as usual with
      *            sprintf().
      */
-    public static function warning($format, ...$args)
+    public static function warning(string $format, ...$args):void
     {
         if (self::$debug) {
             vprintf('Warning: ' . $format . "\n", $args);
@@ -297,7 +289,7 @@ class Pel
      * @return string the translated string, or the original string if
      *         no translation could be found.
      */
-    public static function tra($str)
+    public static function tra(string $str):string
     {
         return self::dgettextWrapper('pel', $str);
     }
@@ -322,7 +314,7 @@ class Pel
      * @return string the translated string, or the original string if
      *         no translation could be found.
      */
-    public static function fmt($format, ...$args)
+    public static function fmt(string $format, ...$args):string
     {
         return vsprintf(self::dgettextWrapper('pel', $format), $args);
     }
@@ -334,8 +326,9 @@ class Pel
      * @param string $domain
      * @param string $str
      * @return string
+     * @noinspection PhpComposerExtensionStubsInspection
      */
-    private static function dgettextWrapper($domain, $str)
+    private static function dgettextWrapper(string $domain, string $str):string
     {
         if (self::$hasdgetext === null) {
             self::$hasdgetext = function_exists('dgettext');

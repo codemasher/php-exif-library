@@ -48,7 +48,7 @@ class PelJpegInvalidMarkerException extends PelException
      * @param int $offset
      *            the offset in the data.
      */
-    public function __construct($marker, $offset)
+    public function __construct(int $marker, int $offset)
     {
         parent::__construct('Invalid marker found at offset %d: 0x%2X', $offset, $marker);
     }

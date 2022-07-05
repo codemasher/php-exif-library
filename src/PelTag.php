@@ -1851,7 +1851,7 @@ class PelTag
     /**
      * Values for tags short names.
      */
-    protected static $exifTagsShort = [
+    protected const exifTagsShort = [
         self::INTEROPERABILITY_INDEX => 'InteroperabilityIndex',
         self::INTEROPERABILITY_VERSION => 'InteroperabilityVersion',
         self::IMAGE_WIDTH => 'ImageWidth',
@@ -1975,7 +1975,7 @@ class PelTag
     /**
      * Values for tags titles.
      */
-    protected static $exifTagsTitle = [
+    protected const exifTagsTitle = [
         self::INTEROPERABILITY_INDEX => 'Interoperability Index',
         self::INTEROPERABILITY_VERSION => 'Interoperability Version',
         self::IMAGE_WIDTH => 'Image Width',
@@ -2099,7 +2099,7 @@ class PelTag
     /**
      * Values for gps tags short names.
      */
-    protected static $gpsTagsShort = [
+    protected const gpsTagsShort = [
         self::GPS_VERSION_ID => 'GPSVersionID',
         self::GPS_LATITUDE_REF => 'GPSLatitudeRef',
         self::GPS_LATITUDE => 'GPSLatitude',
@@ -2136,7 +2136,7 @@ class PelTag
     /**
      * Values for canon maker notes tags titles
      */
-    protected static $canonTagsTitle = [
+    protected const canonTagsTitle = [
         self::CANON_CAMERA_SETTINGS => 'Camera Settings',
         self::CANON_FOCAL_LENGTH => 'Focal Length',
         self::CANON_SHOT_INFO => 'Shot Info',
@@ -2172,7 +2172,7 @@ class PelTag
     /**
      * Values for canon maker notes tags short names
      */
-    protected static $canonTagsShort = [
+    protected const canonTagsShort = [
         self::CANON_CAMERA_SETTINGS => 'CameraSettings',
         self::CANON_FOCAL_LENGTH => 'FocalLength',
         self::CANON_SHOT_INFO => 'ShotInfo',
@@ -2208,7 +2208,7 @@ class PelTag
     /**
      * Values for canon camera settings tags titles
      */
-    protected static $canonCsTagsTitle = [
+    protected const canonCsTagsTitle = [
         self::CANON_CS_MACRO => 'Macro Mode',
         self::CANON_CS_SELF_TIMER => 'Self Timer',
         self::CANON_CS_QUALITY => 'Quality',
@@ -2251,7 +2251,7 @@ class PelTag
     /**
      * Values for canon camera settings tags short names
      */
-    protected static $canonCsTagsShort = [
+    protected const canonCsTagsShort = [
         self::CANON_CS_MACRO => 'MacroMode',
         self::CANON_CS_SELF_TIMER => 'SelfTimer',
         self::CANON_CS_QUALITY => 'Quality',
@@ -2294,7 +2294,7 @@ class PelTag
     /**
      * Values for canon shot info tags titles
      */
-    protected static $canonSiTagsTitle = [
+    protected const canonSiTagsTitle = [
         self::CANON_SI_ISO_SPEED => 'ISO Speed Used',
         self::CANON_SI_MEASURED_EV => 'Measured EV',
         self::CANON_SI_TARGET_APERTURE => 'Target Aperture',
@@ -2317,7 +2317,7 @@ class PelTag
     /**
      * Values for canon shot info tags short names
      */
-    protected static $canonSiTagsShort = [
+    protected const canonSiTagsShort = [
         self::CANON_SI_ISO_SPEED => 'ISOSpeedUsed',
         self::CANON_SI_MEASURED_EV => 'MeasuredEV',
         self::CANON_SI_TARGET_APERTURE => 'TargetAperture',
@@ -2340,7 +2340,7 @@ class PelTag
     /**
      * Values for canon panorama tags titles
      */
-    protected static $canonPaTagsTitle = [
+    protected const canonPaTagsTitle = [
         self::CANON_PA_PANORAMA_FRAME => 'Panorama Frame',
         self::CANON_PA_PANORAMA_DIRECTION => 'Panorama Direction'
     ];
@@ -2348,7 +2348,7 @@ class PelTag
     /**
      * Values for canon panorama tags short names
      */
-    protected static $canonPaTagsShort = [
+    protected const canonPaTagsShort = [
         self::CANON_PA_PANORAMA_FRAME => 'PanoramaFrame',
         self::CANON_PA_PANORAMA_DIRECTION => 'PanoramaDirection'
     ];
@@ -2356,7 +2356,7 @@ class PelTag
     /**
      * Values for canon picture info tags titles
      */
-    protected static $canonPiTagsTitle = [
+    protected const canonPiTagsTitle = [
         self::CANON_PI_IMAGE_WIDTH => 'Image Width',
         self::CANON_PI_IMAGE_HEIGHT => 'Image Height',
         self::CANON_PI_IMAGE_WIDTH_AS_SHOT => 'Image Width As Shot',
@@ -2368,7 +2368,7 @@ class PelTag
     /**
      * Values for canon picture info tags short names
      */
-    protected static $canonPiTagsShort = [
+    protected const canonPiTagsShort = [
         self::CANON_PI_IMAGE_WIDTH => 'ImageWidth',
         self::CANON_PI_IMAGE_HEIGHT => 'ImageHeight',
         self::CANON_PI_IMAGE_WIDTH_AS_SHOT => 'ImageWidthAsShot',
@@ -2380,7 +2380,7 @@ class PelTag
     /**
      * Values for canon file info tags titles
      */
-    protected static $canonFiTagsTitle = [
+    protected const canonFiTagsTitle = [
         self::CANON_FI_FILE_NUMBER => 'File Number',
         self::CANON_FI_BRACKET_MODE => 'Bracket Mode',
         self::CANON_FI_BRACKET_VALUE => 'Bracket Value',
@@ -2403,7 +2403,7 @@ class PelTag
     /**
      * Values for canon file info tags short names
      */
-    protected static $canonFiTagsShort = [
+    protected const canonFiTagsShort = [
         self::CANON_FI_FILE_NUMBER => 'FileNumber',
         self::CANON_FI_BRACKET_MODE => 'BracketMode',
         self::CANON_FI_BRACKET_VALUE => 'BracketValue',
@@ -2433,7 +2433,7 @@ class PelTag
      *            the tag.
      * @return string short name or long name of the tag.
      */
-    public static function getValue($container, $tag)
+    public static function getValue(array $container, int $tag):string
     {
         if (isset($container[$tag])) {
             return $container[$tag];
@@ -2452,19 +2452,19 @@ class PelTag
      * @return mixed (bool|int)
      *         the tag.
      */
-    public static function getTagByName($name)
+    public static function getTagByName(string $name)
     {
-        $k = array_search($name, self::$exifTagsShort);
+        $k = array_search($name, self::exifTagsShort);
         if ($k !== false) {
             return $k;
         }
 
-        $k = array_search($name, static::$gpsTagsShort);
+        $k = array_search($name, static::gpsTagsShort);
         if ($k !== false) {
             return $k;
         }
 
-        return array_search($name, self::$canonTagsShort);
+        return array_search($name, self::canonTagsShort);
     }
 
     /**
@@ -2476,9 +2476,9 @@ class PelTag
      * @return mixed (bool|int)
      *         the tag.
      */
-    public static function getExifTagByName($name)
+    public static function getExifTagByName(string $name)
     {
-        return array_search($name, static::$exifTagsShort);
+        return array_search($name, static::exifTagsShort);
     }
 
     /**
@@ -2490,9 +2490,9 @@ class PelTag
      * @return mixed (bool|int)
      *         the tag.
      */
-    public static function getGpsTagByName($name)
+    public static function getGpsTagByName(string $name)
     {
-        return array_search($name, static::$gpsTagsShort);
+        return array_search($name, static::gpsTagsShort);
     }
 
     /**
@@ -2502,7 +2502,7 @@ class PelTag
      *            the tag.
      * @return string description string.
      */
-    protected static function unknownTag($tag)
+    protected static function unknownTag(int $tag):string
     {
         return Pel::fmt('Unknown: 0x%04X', $tag);
     }
@@ -2521,28 +2521,28 @@ class PelTag
      *         'Unknown:0xTTTT' will be returned where 'TTTT' is the hexadecimal
      *         representation of the tag.
      */
-    public static function getName($type, $tag)
+    public static function getName(int $type, int $tag):string
     {
         switch ($type) {
             case PelIfd::IFD0:
             case PelIfd::IFD1:
             case PelIfd::EXIF:
             case PelIfd::INTEROPERABILITY:
-                return self::getValue(self::$exifTagsShort, $tag);
+                return self::getValue(self::exifTagsShort, $tag);
             case PelIfd::GPS:
-                return self::getValue(self::$gpsTagsShort, $tag);
+                return self::getValue(self::gpsTagsShort, $tag);
             case PelIfd::CANON_MAKER_NOTES:
-                return self::getValue(self::$canonTagsShort, $tag);
+                return self::getValue(self::canonTagsShort, $tag);
             case PelIfd::CANON_CAMERA_SETTINGS:
-                return self::getValue(self::$canonCsTagsShort, $tag);
+                return self::getValue(self::canonCsTagsShort, $tag);
             case PelIfd::CANON_SHOT_INFO:
-                return self::getValue(self::$canonSiTagsShort, $tag);
+                return self::getValue(self::canonSiTagsShort, $tag);
             case PelIfd::CANON_PANORAMA:
-                return self::getValue(self::$canonPaTagsShort, $tag);
+                return self::getValue(self::canonPaTagsShort, $tag);
             case PelIfd::CANON_PICTURE_INFO:
-                return self::getValue(self::$canonPiTagsShort, $tag);
+                return self::getValue(self::canonPiTagsShort, $tag);
             case PelIfd::CANON_FILE_INFO:
-                return self::getValue(self::$canonFiTagsShort, $tag);
+                return self::getValue(self::canonFiTagsShort, $tag);
         }
 
         return self::unknownTag($tag);
@@ -2562,28 +2562,28 @@ class PelTag
      *         'Unknown Tag: 0xTT' will be returned where 'TT' is the
      *         hexadecimal representation of the tag.
      */
-    public function getTitle($type, $tag)
+    public function getTitle(int $type, int $tag):string
     {
         switch ($type) {
             case PelIfd::IFD0:
             case PelIfd::IFD1:
             case PelIfd::EXIF:
             case PelIfd::INTEROPERABILITY:
-                return Pel::tra(self::getValue(self::$exifTagsTitle, $tag));
+                return Pel::tra(self::getValue(self::exifTagsTitle, $tag));
             case PelIfd::GPS:
-                return Pel::tra(self::getValue(self::$gpsTagsShort, $tag));
+                return Pel::tra(self::getValue(self::gpsTagsShort, $tag));
             case PelIfd::CANON_MAKER_NOTES:
-                return Pel::tra(self::getValue(self::$canonTagsTitle, $tag));
+                return Pel::tra(self::getValue(self::canonTagsTitle, $tag));
             case PelIfd::CANON_CAMERA_SETTINGS:
-                return self::getValue(self::$canonCsTagsTitle, $tag);
+                return self::getValue(self::canonCsTagsTitle, $tag);
             case PelIfd::CANON_SHOT_INFO:
-                return self::getValue(self::$canonSiTagsTitle, $tag);
+                return self::getValue(self::canonSiTagsTitle, $tag);
             case PelIfd::CANON_PANORAMA:
-                return self::getValue(self::$canonPaTagsTitle, $tag);
+                return self::getValue(self::canonPaTagsTitle, $tag);
             case PelIfd::CANON_PICTURE_INFO:
-                return self::getValue(self::$canonPiTagsTitle, $tag);
+                return self::getValue(self::canonPiTagsTitle, $tag);
             case PelIfd::CANON_FILE_INFO:
-                return self::getValue(self::$canonFiTagsTitle, $tag);
+                return self::getValue(self::canonFiTagsTitle, $tag);
         }
 
         return self::unknownTag($tag);

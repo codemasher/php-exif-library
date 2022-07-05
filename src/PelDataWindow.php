@@ -36,10 +36,8 @@ class PelDataWindow
      * The data held by this window.
      *
      * The string can contain any kind of data, including binary data.
-     *
-     * @var string
      */
-    private $data = '';
+    private string $data = '';
 
     /**
      * The byte order currently in use.
@@ -48,10 +46,9 @@ class PelDataWindow
      * example the {@link getShort} function. It must be one of {@link
      * PelConvert::LITTLE_ENDIAN} and {@link PelConvert::BIG_ENDIAN}.
      *
-     * @var boolean
      * @see PelDataWindow::setByteOrder, getByteOrder
      */
-    private $order;
+    private bool $order;
 
     /**
      * The start of the current window.
@@ -60,10 +57,9 @@ class PelDataWindow
      * offset, effectively limiting access to a window starting at this
      * byte.
      *
-     * @var int
      * @see PelDataWindow::setWindowStart
      */
-    private $start = 0;
+    private int $start = 0;
 
     /**
      * The size of the current window.
@@ -72,10 +68,9 @@ class PelDataWindow
      * variable. A valid offset must be strictly less than this
      * variable.
      *
-     * @var int
      * @see PelDataWindow::setWindowSize
      */
-    private $size = 0;
+    private int $size = 0;
 
     /**
      * Construct a new data window with the data supplied.
@@ -93,11 +88,11 @@ class PelDataWindow
      *            setByteOrder()}.
      * @throws PelInvalidArgumentException if $data was of invalid type
      */
-    public function __construct($data = '', $endianess = PelConvert::LITTLE_ENDIAN)
+    public function __construct($data = '', bool $endianess = PelConvert::LITTLE_ENDIAN)
     {
         if (is_string($data)) {
             $this->data = $data;
-        } elseif ((is_resource($data) && get_resource_type($data) === 'gd') || (PHP_VERSION_ID >= 80000 && is_object($data) && $data instanceof \GDImage)) {
+        } elseif ((is_resource($data) && get_resource_type($data) === 'gd') || (PHP_VERSION_ID >= 80000 && $data instanceof \GDImage)) {
             /*
              * The ImageJpeg() function insists on printing the bytes
              * instead of returning them in a more civil way as a string, so
@@ -121,7 +116,7 @@ class PelDataWindow
      *         allowed offsets go from 0 up to this number minus one.
      * @see getBytes()
      */
-    public function getSize()
+    public function getSize():int
     {
         return $this->size;
     }
@@ -134,7 +129,7 @@ class PelDataWindow
      *            {@link PelConvert::LITTLE_ENDIAN} or {@link
      *            PelConvert::BIG_ENDIAN}.
      */
-    public function setByteOrder($order)
+    public function setByteOrder(bool $order):void
     {
         $this->order = $order;
     }
@@ -145,7 +140,7 @@ class PelDataWindow
      * @return boolean this will be either {@link
      *         PelConvert::LITTLE_ENDIAN} or {@link PelConvert::BIG_ENDIAN}.
      */
-    public function getByteOrder()
+    public function getByteOrder():bool
     {
         return $this->order;
     }
@@ -159,7 +154,7 @@ class PelDataWindow
      *            will shrink to keep the end of the window in place.
      * @throws PelDataWindowWindowException
      */
-    public function setWindowStart($start)
+    public function setWindowStart(int $start):void
     {
         if ($start < 0 || $start > $this->size) {
             throw new PelDataWindowWindowException('Window [%d, %d] does ' . 'not fit in window [0, %d]', $start, $this->size, $this->size);
@@ -177,7 +172,7 @@ class PelDataWindow
      *            negative, the window will be shrunk by the argument.
      * @throws PelDataWindowWindowException
      */
-    public function setWindowSize($size)
+    public function setWindowSize(int $size):void
     {
         if ($size < 0) {
             $size += $this->size;
@@ -203,7 +198,7 @@ class PelDataWindow
      *         as this window, but (optionally) with a smaller window size.
      * @throws PelDataWindowWindowException
      */
-    public function getClone($start = null, $size = null)
+    public function getClone(int $start = null, int $size = null):self
     {
         $c = clone $this;
 
@@ -227,7 +222,7 @@ class PelDataWindow
      *         invalid a new {@link PelDataWindowOffsetException} is thrown.
      * @throws PelDataWindowOffsetException
      */
-    private function validateOffset($offset)
+    private function validateOffset(int $offset):void
     {
         if ($offset < 0 || $offset >= $this->size) {
             throw new PelDataWindowOffsetException('Offset %d not within [%d, %d]', $offset, 0, $this->size - 1);
@@ -253,7 +248,7 @@ class PelDataWindow
      *         always return no more than {@link getSize()} bytes.
      * @throws PelDataWindowOffsetException
      */
-    public function getBytes($start = null, $size = null)
+    public function getBytes(int $start = null, int $size = null):string
     {
         if (is_int($start)) {
             if ($start < 0) {
@@ -290,7 +285,7 @@ class PelDataWindow
      * @return integer the unsigned byte found at offset.
      * @throws PelDataWindowOffsetException
      */
-    public function getByte($offset = 0)
+    public function getByte(int $offset = 0):int
     {
         /*
          * Validate the offset --- this throws an exception if offset is
@@ -317,7 +312,7 @@ class PelDataWindow
      * @return integer the signed byte found at offset.
      * @throws PelDataWindowOffsetException
      */
-    public function getSByte($offset = 0)
+    public function getSByte(int $offset = 0):int
     {
         /*
          * Validate the offset --- this throws an exception if offset is
@@ -344,7 +339,7 @@ class PelDataWindow
      * @return integer the unsigned short found at offset.
      * @throws PelDataWindowOffsetException
      */
-    public function getShort($offset = 0)
+    public function getShort(int $offset = 0):int
     {
         /*
          * Validate the offset+1 to see if we can safely get two bytes ---
@@ -372,7 +367,7 @@ class PelDataWindow
      * @return integer the signed short found at offset.
      * @throws PelDataWindowOffsetException
      */
-    public function getSShort($offset = 0)
+    public function getSShort(int $offset = 0):int
     {
         /*
          * Validate the offset+1 to see if we can safely get two bytes ---
@@ -400,7 +395,7 @@ class PelDataWindow
      * @return integer the unsigned long found at offset.
      * @throws PelDataWindowOffsetException
      */
-    public function getLong($offset = 0)
+    public function getLong(int $offset = 0):int
     {
         /*
          * Validate the offset+3 to see if we can safely get four bytes
@@ -428,7 +423,7 @@ class PelDataWindow
      * @return integer the signed long found at offset.
      * @throws PelDataWindowOffsetException
      */
-    public function getSLong($offset = 0)
+    public function getSLong(int $offset = 0):int
     {
         /*
          * Validate the offset+3 to see if we can safely get four bytes
@@ -458,7 +453,7 @@ class PelDataWindow
      *         and denominator. Both of these numbers will be unsigned longs.
      * @throws PelDataWindowOffsetException
      */
-    public function getRational($offset = 0)
+    public function getRational(int $offset = 0):array
     {
         return [
             $this->getLong($offset),
@@ -480,7 +475,7 @@ class PelDataWindow
      *         and denominator. Both of these numbers will be signed longs.
      * @throws PelDataWindowOffsetException
      */
-    public function getSRational($offset = 0)
+    public function getSRational(int $offset = 0):array
     {
         return [
             $this->getSLong($offset),
@@ -504,7 +499,7 @@ class PelDataWindow
      *         will stop as soon as a mismatch if found.
      * @throws PelDataWindowOffsetException
      */
-    public function strcmp($offset, $str)
+    public function strcmp(int $offset, string $str):bool
     {
         /*
          * Validate the offset of the final character we might have to
@@ -535,7 +530,7 @@ class PelDataWindow
      *         the number of bytes accessible, the total number of bytes, and
      *         the window start and stop.
      */
-    public function __toString()
+    public function __toString():string
     {
         return Pel::fmt('DataWindow: %d bytes in [%d, %d] of %d bytes', $this->size, $this->start, $this->start + $this->size, strlen($this->data));
     }

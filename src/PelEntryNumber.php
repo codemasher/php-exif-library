@@ -42,45 +42,37 @@
  */
 namespace lsolesen\pel;
 
-abstract class PelEntryNumber extends PelEntry
+abstract class PelEntryNumber extends PelEntry implements PelEntryNumberInterface
 {
 
     /**
      * The value held by this entry.
-     *
-     * @var array
      */
-    protected $value = [];
+    protected array $value = [];
 
     /**
      * The minimum allowed value.
      *
      * Any attempt to change the value below this variable will result
      * in a {@link PelOverflowException} being thrown.
-     *
-     * @var int
      */
-    protected $min;
+    protected int $min;
 
     /**
      * The maximum allowed value.
      *
      * Any attempt to change the value over this variable will result in
      * a {@link PelOverflowException} being thrown.
-     *
-     * @var int
      */
-    protected $max;
+    protected int $max;
 
     /**
      * The dimension of the number held.
      *
      * Normal numbers have a dimension of one, pairs have a dimension of
      * two, etc.
-     *
-     * @var int
      */
-    protected $dimension = 1;
+    protected int $dimension = 1;
 
     /**
      * Change the value.
@@ -94,33 +86,22 @@ abstract class PelEntryNumber extends PelEntry
      * method will always return an array except for when a single
      * number is given here.
      *
-     * @param int|array $value...
+     * @param $value
      *            the new value(s). This can be zero or
      *            more numbers, that is, either integers or arrays. The input will
      *            be checked to ensure that the numbers are within the valid range.
      *            If not, then a {@link PelOverflowException} will be thrown.
      * @see PelEntryNumber::getValue
      */
-    public function setValue($value)
+    public function setValue($value):void
     {
-        $value = func_get_args();
-        $this->setValueArray($value);
+        $this->setValueArray(func_get_args());
     }
 
     /**
-     * Change the value.
-     *
-     * This method can change both the number of components and the
-     * value of the components. Range checks will be made on the new
-     * value, and a {@link PelOverflowException} will be thrown if the
-     * value is found to be outside the legal range.
-     *
-     * @param array $values
-     *            the new values. The array must contain the new
-     *            numbers.
-     * @see PelEntryNumber::getValue
+     * @inheritDoc
      */
-    public function setValueArray($values)
+    public function setValueArray(array $values):void
     {
         foreach ($values as $v) {
             $this->validateNumber($v);
@@ -146,19 +127,9 @@ abstract class PelEntryNumber extends PelEntry
     }
 
     /**
-     * Validate a number.
-     *
-     * This method will check that the number given is within the range
-     * given my {@link getMin()} and {@link getMax()}, inclusive. If
-     * not, then a {@link PelOverflowException} is thrown.
-     *
-     * @param int|array $n
-     *            the number in question.
-     * @return void nothing, but will throw a {@link
-     *         PelOverflowException} if the number is found to be outside the
-     *         legal range and {@link Pel::$strict} is true.
+     * @inheritDoc
      */
-    public function validateNumber($n)
+    public function validateNumber($n):void
     {
         if ($this->dimension == 1 || is_scalar($n)) {
             if ($n < $this->min || $n > $this->max) {
@@ -177,37 +148,14 @@ abstract class PelEntryNumber extends PelEntry
     }
 
     /**
-     * Add a number.
-     *
-     * This appends a number to the numbers already held by this entry,
-     * thereby increasing the number of components by one.
-     *
-     * @param int|array $n
-     *            the number to be added.
+     * @inheritDoc
      */
-    public function addNumber($n)
+    public function addNumber($n):void
     {
         $this->validateNumber($n);
         $this->value[] = $n;
         $this->components ++;
     }
-
-    /**
-     * Convert a number into bytes.
-     *
-     * The concrete subclasses will have to implement this method so
-     * that the numbers represented can be turned into bytes.
-     *
-     * The method will be called once for each number held by the entry.
-     *
-     * @param int $number
-     *            the number that should be converted.
-     * @param boolean $order
-     *            one of {@link PelConvert::LITTLE_ENDIAN} and
-     *            {@link PelConvert::BIG_ENDIAN}, specifying the target byte order.
-     * @return string bytes representing the number given.
-     */
-    abstract public function numberToBytes($number, $order);
 
     /**
      * Turn this entry into bytes.
@@ -218,7 +166,7 @@ abstract class PelEntryNumber extends PelEntry
      *            PelConvert::BIG_ENDIAN}.
      * @return string bytes representing this entry.
      */
-    public function getBytes($o)
+    public function getBytes(bool $o):string
     {
         $bytes = '';
         for ($i = 0; $i < $this->components; $i ++) {
@@ -234,36 +182,17 @@ abstract class PelEntryNumber extends PelEntry
     }
 
     /**
-     * Format a number.
-     *
-     * This method is called by {@link getText} to format numbers.
-     * Subclasses should override this method if they need more
-     * sophisticated behavior than the default, which is to just return
-     * the number as is.
-     *
-     * @param int $number
-     *            the number which will be formatted.
-     * @param boolean $brief
-     *            it could be that there is both a verbose and a
-     *            brief formatting available, and this argument controls that.
-     * @return string the number formatted as a string suitable for
-     *         display.
+     * @inheritDoc
      */
-    public function formatNumber($number, $brief = false)
+    public function formatNumber($number, bool $brief = false):string
     {
-        return $number;
+        return (string)$number;
     }
 
     /**
-     * Get the numeric value of this entry as text.
-     *
-     * @param boolean $brief
-     *            use brief output? The numbers will be separated
-     *            by a single space if brief output is requested, otherwise a space
-     *            and a comma will be used.
-     * @return string the numbers(s) held by this entry.
+     * @inheritDoc
      */
-    public function getText($brief = false)
+    public function getText(bool $brief = false):string
     {
         if ($this->components == 0) {
             return '';

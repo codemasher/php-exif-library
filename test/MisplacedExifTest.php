@@ -32,8 +32,12 @@ use lsolesen\pel\PelJpegMarker;
 class MisplacedExifTest extends TestCase
 {
 
-    // NOTE: this test relies on the assumption that internal PelJpeg::sections order is kept between section
-    // manipulations. It may fail it this changes.
+	/**
+	 * NOTE: this test relies on the assumption that internal PelJpeg::sections order is kept between section
+	 * manipulations. It may fail it this changes.
+	 *
+	 * @phan-suppress PhanTypeMismatchDimFetchNullable (found an array index of type ?0, but expected the index to be of the non-nullable type int|string)
+	 */
     public function testRead()
     {
         Pel::clearExceptions();

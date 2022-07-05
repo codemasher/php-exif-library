@@ -52,10 +52,8 @@ class PelException extends \Exception
      *            any number of arguments to be used with
      *            the format string.
      */
-    public function __construct($fmt, $args = null)
+    public function __construct($fmt, ...$args)
     {
-        $args = func_get_args();
-        $fmt = array_shift($args);
         parent::__construct(vsprintf($fmt, $args));
     }
 }

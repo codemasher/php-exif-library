@@ -56,17 +56,13 @@ class PelEntryCopyright extends PelEntryAscii
 
     /**
      * The photographer copyright.
-     *
-     * @var string
      */
-    private $photographer;
+    private string $photographer;
 
     /**
      * The editor copyright.
-     *
-     * @var string
      */
-    private $editor;
+    private string $editor;
 
     /**
      * Make a new entry for holding copyright information.
@@ -78,7 +74,7 @@ class PelEntryCopyright extends PelEntryAscii
      *            the editor copyright. Use the empty string if
      *            there is no editor copyright.
      */
-    public function __construct($photographer = '', $editor = '')
+    public function __construct(string $photographer = '', string $editor = '')
     {
         parent::__construct(PelTag::COPYRIGHT);
         $this->setValue($photographer, $editor);
@@ -92,7 +88,7 @@ class PelEntryCopyright extends PelEntryAscii
      * @param string $editor the editor copyright. Use the empty string if
      *            there is no editor copyright.
      */
-    public function setValue($photographer = '', $editor = '')
+    public function setValue($photographer = '', string $editor = ''):void
     {
         $this->photographer = $photographer;
         $this->editor = $editor;
@@ -120,7 +116,7 @@ class PelEntryCopyright extends PelEntryAscii
      *         order, so that the first array index will be the photographer
      *         copyright, and the second will be the editor copyright.
      */
-    public function getValue()
+    public function getValue():array
     {
         return [
             $this->photographer,
@@ -142,7 +138,7 @@ class PelEntryCopyright extends PelEntryAscii
      *            returned as is.
      * @return string the copyright information in a string.
      */
-    public function getText($brief = false)
+    public function getText(bool $brief = false):string
     {
         if ($brief) {
             $p = '';

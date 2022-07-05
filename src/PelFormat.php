@@ -163,7 +163,7 @@ class PelFormat
     /**
      * Values for format's short names
      */
-    protected static $formatName = [
+    protected const formatName = [
         self::ASCII => 'Ascii',
         self::BYTE => 'Byte',
         self::SHORT => 'Short',
@@ -178,7 +178,7 @@ class PelFormat
         self::UNDEFINED => 'Undefined'
     ];
 
-    protected static $formatLength = [
+    protected const formatLength = [
         self::ASCII => 1,
         self::BYTE => 1,
         self::SHORT => 2,
@@ -200,10 +200,10 @@ class PelFormat
      *            as defined in {@link PelFormat}
      * @return string
      */
-    public static function getName($type)
+    public static function getName(int $type):string
     {
-        if (array_key_exists($type, self::$formatName)) {
-            return self::$formatName[$type];
+        if (array_key_exists($type, self::formatName)) {
+            return self::formatName[$type];
         }
         throw new PelIllegalFormatException($type);
     }
@@ -216,10 +216,10 @@ class PelFormat
      *            as defined in {@link PelFormat}
      * @return integer
      */
-    public static function getSize($type)
+    public static function getSize(int $type):int
     {
-        if (array_key_exists($type, self::$formatLength)) {
-            return self::$formatLength[$type];
+        if (array_key_exists($type, self::formatLength)) {
+            return self::formatLength[$type];
         }
         throw new PelIllegalFormatException($type);
     }

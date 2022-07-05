@@ -44,7 +44,7 @@ class PelIllegalFormatException extends PelException
      * @param int $type
      *            the type of IFD.
      */
-    public function __construct($type)
+    public function __construct(int $type)
     {
         parent::__construct('Unknown format: 0x%X', $type);
     }

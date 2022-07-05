@@ -24,6 +24,7 @@
  */
 namespace Pel\Test;
 
+use lsolesen\pel\PelEntryNumberInterface;
 use PHPUnit\Framework\TestCase;
 use lsolesen\pel\Pel;
 use lsolesen\pel\PelOverflowException;
@@ -31,11 +32,11 @@ use lsolesen\pel\PelOverflowException;
 abstract class NumberTestCase extends TestCase
 {
 
-    protected $min;
+    protected int $min;
 
-    protected $max;
+    protected int $max;
 
-    protected $num;
+    protected PelEntryNumberInterface $num;
 
     /**
      *
@@ -43,10 +44,12 @@ abstract class NumberTestCase extends TestCase
      */
     public function setUp(): void
     {
-        parent::setUp();
         Pel::setStrictParsing(true);
     }
 
+	/**
+	 * @phan-suppress PhanParamTooMany (variadic functions)
+	 */
     public function testOverflow()
     {
         $this->num->setValue(0);
@@ -89,26 +92,25 @@ abstract class NumberTestCase extends TestCase
         $this->assertSame(0, $this->num->getValue());
     }
 
-    public function testReturnValues()
+	/**
+	 * @phan-suppress PhanParamTooMany (variadic functions)
+	 */
+	public function testReturnValues()
     {
         $this->num->setValue(1, 2, 3);
-        $this->assertSame([
-            1,
-            2,
-            3
-        ], $this->num->getValue());
+        $this->assertSame([1, 2, 3], $this->num->getValue());
         $this->assertSame('1, 2, 3', $this->num->getText());
 
         $this->num->setValue(1);
         $this->assertSame(1, $this->num->getValue());
-        $this->assertSame(1, $this->num->getText());
+        $this->assertSame('1', $this->num->getText());
 
         $this->num->setValue($this->max);
         $this->assertSame($this->max, $this->num->getValue());
-        $this->assertSame($this->max, $this->num->getText());
+        $this->assertSame((string)$this->max, $this->num->getText());
 
         $this->num->setValue($this->min);
         $this->assertSame($this->min, $this->num->getValue());
-        $this->assertSame($this->min, $this->num->getText());
+        $this->assertSame((string)$this->min, $this->num->getText());
     }
 }

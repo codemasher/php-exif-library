@@ -36,8 +36,6 @@ class PelEntryUndefinedTest extends TestCase
 
     public function testReturnValues()
     {
-        new PelEntryUndefined(42);
-
         $entry = new PelEntryUndefined(42, 'foo bar baz');
         $this->assertEquals($entry->getComponents(), 11);
         $this->assertEquals($entry->getValue(), 'foo bar baz');

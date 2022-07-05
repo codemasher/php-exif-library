@@ -73,10 +73,8 @@ class PelEntryTime extends PelEntryAscii
      * This is an integer counting the number of whole days since
      * January 1st, 4713 B.C. The fractional part of the timestamp held
      * by this entry is stored in {@link $seconds}.
-     *
-     * @var int
      */
-    private $day_count;
+    private int $day_count;
 
     /**
      * The number of seconds into the day of the timestamp held by this
@@ -84,10 +82,8 @@ class PelEntryTime extends PelEntryAscii
      *
      * The number of whole days is stored in {@link $day_count} and the
      * number of seconds left-over is stored here.
-     *
-     * @var int
      */
-    private $seconds;
+    private int $seconds;
 
     /**
      * Make a new entry for holding a timestamp.
@@ -111,8 +107,9 @@ class PelEntryTime extends PelEntryAscii
      *            the type of the timestamp. This must be one of
      *            {@link UNIX_TIMESTAMP}, {@link EXIF_STRING}, or
      *            {@link JULIAN_DAY_COUNT}.
-     */
-    public function __construct($tag, $timestamp, $type = self::UNIX_TIMESTAMP)
+     *
+     * @noinspection PhpMissingParentConstructorInspection*/
+    public function __construct(int $tag, $timestamp, int $type = self::UNIX_TIMESTAMP)
     {
         $this->tag = $tag;
         $this->format = PelFormat::ASCII;
@@ -139,7 +136,7 @@ class PelEntryTime extends PelEntryAscii
      *         count and the fractional part denotes the time of day (0.25 means
      *         6:00, 0.75 means 18:00).
      */
-    public function getValue($type = self::UNIX_TIMESTAMP)
+    public function getValue(int $type = self::UNIX_TIMESTAMP)
     {
         switch ($type) {
             case self::UNIX_TIMESTAMP:
@@ -185,11 +182,11 @@ class PelEntryTime extends PelEntryAscii
      *            {@link JULIAN_DAY_COUNT}.
      * @throws PelInvalidArgumentException
      */
-    public function setValue($timestamp, $type = self::UNIX_TIMESTAMP)
+    public function setValue($timestamp, int $type = self::UNIX_TIMESTAMP):void
     {
         if ($type === self::UNIX_TIMESTAMP) {
             if (is_int($timestamp) || is_float($timestamp)) {
-                $this->day_count = $this->convertUnixToJd($timestamp);
+                $this->day_count = (int)$this->convertUnixToJd($timestamp); // @todo ??
                 $this->seconds = $timestamp % 86400;
             } else {
                 throw new PelInvalidArgumentException('Expected integer value for $type, got %s', gettype($timestamp));
@@ -240,7 +237,7 @@ class PelEntryTime extends PelEntryAscii
      *            the day in the month.
      * @return integer the Julian Day count.
      */
-    public function convertGregorianToJd($year, $month, $day)
+    public function convertGregorianToJd(int $year, int $month, int $day):int
     {
         // Special case mapping 0/0/0 -> 0
         if ($year == 0 || $month == 0 || $day == 0) {
@@ -248,7 +245,7 @@ class PelEntryTime extends PelEntryAscii
         }
 
         $m1412 = ($month <= 2) ? - 1 : 0;
-        return floor((1461 * ($year + 4800 + $m1412)) / 4) + floor((367 * ($month - 2 - 12 * $m1412)) / 12) - floor((3 * floor(($year + 4900 + $m1412) / 100)) / 4) + $day - 32075;
+        return (int)(floor((1461 * ($year + 4800 + $m1412)) / 4) + floor((367 * ($month - 2 - 12 * $m1412)) / 12) - floor((3 * floor(($year + 4900 + $m1412) / 100)) / 4) + $day - 32075);
     }
 
     /**
@@ -258,7 +255,7 @@ class PelEntryTime extends PelEntryAscii
      *            the Julian Day count.
      * @return array an array with three entries: year, month, day.
      */
-    public function convertJdToGregorian($jd)
+    public function convertJdToGregorian(int $jd):array
     {
         // Special case mapping 0 -> 0/0/0
         if ($jd == 0) {
@@ -293,7 +290,7 @@ class PelEntryTime extends PelEntryAscii
      *            the timestamp.
      * @return float the Julian Day count.
      */
-    public function convertUnixToJd($timestamp)
+    public function convertUnixToJd($timestamp):float
     {
         return floor($timestamp / 86400) + 2440588;
     }

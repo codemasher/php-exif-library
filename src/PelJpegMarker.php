@@ -365,7 +365,7 @@ class PelJpegMarker
     /**
      * Values for marker's short names
      */
-    protected static $jpegMarkerShort = [
+    protected const jpegMarkerShort = [
         self::SOF0 => 'SOF0',
         self::SOF1 => 'SOF1',
         self::SOF2 => 'SOF2',
@@ -434,7 +434,7 @@ class PelJpegMarker
     /**
      * Values for marker's descriptions names.
      */
-    protected static $jpegMarkerDescriptions = [
+    protected const jpegMarkerDescriptions = [
         self::SOF0 => 'Encoding (baseline)',
         self::SOF1 => 'Encoding (extended sequential)',
         self::SOF2 => 'Encoding (progressive)',
@@ -473,7 +473,7 @@ class PelJpegMarker
      *            the marker as defined in {@link PelJpegMarker}
      * @return boolean
      */
-    public static function isValid($marker)
+    public static function isValid(int $marker):bool
     {
         return ($marker >= self::SOF0 && $marker <= self::COM);
     }
@@ -486,7 +486,7 @@ class PelJpegMarker
      *            the marker as defined in {@link PelJpegMarker}
      * @return string
      */
-    public static function getBytes($marker)
+    public static function getBytes(int $marker):string
     {
         return chr($marker);
     }
@@ -499,10 +499,10 @@ class PelJpegMarker
      *            the marker as defined in {@link PelJpegMarker}
      * @return string
      */
-    public static function getName($marker)
+    public static function getName(int $marker):string
     {
-        if (array_key_exists($marker, self::$jpegMarkerShort)) {
-            return self::$jpegMarkerShort[$marker];
+        if (array_key_exists($marker, self::jpegMarkerShort)) {
+            return self::jpegMarkerShort[$marker];
         } else {
             return Pel::fmt('Unknown marker: 0x%02X', $marker);
         }
@@ -515,15 +515,15 @@ class PelJpegMarker
      *            the marker as defined in {@link PelJpegMarker}
      * @return string
      */
-    public static function getDescription($marker)
+    public static function getDescription(int $marker):string
     {
-        if (array_key_exists($marker, self::$jpegMarkerShort)) {
-            if (array_key_exists($marker, self::$jpegMarkerDescriptions)) {
-                return self::$jpegMarkerDescriptions[$marker];
+        if (array_key_exists($marker, self::jpegMarkerShort)) {
+            if (array_key_exists($marker, self::jpegMarkerDescriptions)) {
+                return self::jpegMarkerDescriptions[$marker];
             } else {
-                $splitted = preg_split("/(\d+)/", self::$jpegMarkerShort[$marker], - 1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-                if ((count($splitted) == 2) && array_key_exists($splitted[0], self::$jpegMarkerDescriptions)) {
-                    return Pel::fmt(self::$jpegMarkerDescriptions[$splitted[0]], $splitted[1]);
+                $splitted = preg_split("/(\d+)/", self::jpegMarkerShort[$marker], - 1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+                if ((count($splitted) == 2) && array_key_exists($splitted[0], self::jpegMarkerDescriptions)) {
+                    return Pel::fmt(self::jpegMarkerDescriptions[$splitted[0]], $splitted[1]);
                 }
             }
         }

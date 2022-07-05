@@ -27,12 +27,6 @@ namespace Pel\Test;
 use PHPUnit\Framework\TestCase;
 use lsolesen\pel\PelJpeg;
 use lsolesen\pel\PelDataWindow;
-use lsolesen\pel\PelIfd;
-use lsolesen\pel\PelEntryAscii;
-use lsolesen\pel\PelTag;
-use lsolesen\pel\PelEntryRational;
-use lsolesen\pel\Pel;
-use lsolesen\pel\PelExif;
 
 class Gh200Test extends TestCase
 {
@@ -43,7 +37,7 @@ class Gh200Test extends TestCase
 
         $data = new PelDataWindow(file_get_contents($file));
         $pelJpeg = new PelJpeg($data);
-        
+
         $this->assertInstanceOf('\lsolesen\pel\PelJpeg', $pelJpeg);
     }
 }
