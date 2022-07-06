@@ -281,7 +281,7 @@ class PelJpeg
      */
     public function loadFile(string $filename):void
     {
-        $content = @file_get_contents($filename);
+        $content = file_get_contents($filename);
         if ($content === false) {
             throw new PelException('Can not open file "%s"', $filename);
         } else {
