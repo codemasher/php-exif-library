@@ -54,7 +54,7 @@ $error = false;
  * The next argument could be -d to signal debug mode where lots of
  * extra information is printed out when the image is parsed.
  */
-if (isset($argv[0]) && $argv[0] == '-d') {
+if (isset($argv[0]) && $argv[0] === '-d') {
     Pel::setDebug(true);
     array_shift($argv);
 }
@@ -130,7 +130,7 @@ $output_jpeg = new PelJpeg($scaled);
 $exif = $input_jpeg->getExif();
 
 /* If no Exif data was present, then $exif is null. */
-if ($exif != null) {
+if ($exif !== null) {
     $output_jpeg->setExif($exif);
 }
 

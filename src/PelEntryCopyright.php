@@ -93,11 +93,11 @@ class PelEntryCopyright extends PelEntryAscii
         $this->photographer = $photographer;
         $this->editor = $editor;
 
-        if ($photographer == '' && $editor != '') {
+        if ($photographer === '' && $editor !== '') {
             $photographer = ' ';
         }
 
-        if ($editor == '') {
+        if ($editor === '') {
             parent::setValue($photographer);
         } else {
             parent::setValue($photographer . chr(0x00) . $editor);
@@ -148,15 +148,15 @@ class PelEntryCopyright extends PelEntryAscii
             $e = ' ' . Pel::tra('(Editor)');
         }
 
-        if ($this->photographer != '' && $this->editor != '') {
+        if ($this->photographer !== '' && $this->editor !== '') {
             return $this->photographer . $p . ' - ' . $this->editor . $e;
         }
 
-        if ($this->photographer != '') {
+        if ($this->photographer !== '') {
             return $this->photographer . $p;
         }
 
-        if ($this->editor != '') {
+        if ($this->editor !== '') {
             return $this->editor . $e;
         }
 

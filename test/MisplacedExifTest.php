@@ -52,7 +52,7 @@ class MisplacedExifTest extends TestCase
         $exifIdx = null;
         $idx = 0;
         foreach ($sections1 as $section) {
-            if (($section[0] == PelJpegMarker::APP1) && ($section[1] instanceof PelExif)) {
+            if (($section[0] === PelJpegMarker::APP1) && ($section[1] instanceof PelExif)) {
                 $exifIdx = $idx;
                 break;
             }

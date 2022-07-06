@@ -55,7 +55,7 @@ $prog = array_shift($argv);
 $error = false;
 
 /* Accept the optional -d command line argument. */
-if (isset($argv[0]) && $argv[0] == '-d') {
+if (isset($argv[0]) && $argv[0] === '-d') {
     Pel::setDebug(true);
     array_shift($argv);
 }
@@ -100,7 +100,7 @@ foreach ($argv as $file) {
     $ifd0 = $tiff->getIfd();
     $entry = $ifd0->getEntry(PelTag::DATE_TIME);
 
-    if ($entry == null) {
+    if ($entry === null) {
         println('Skipping %s because no DATE_TIME tag was found.', $file);
         continue;
     }

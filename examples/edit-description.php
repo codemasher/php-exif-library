@@ -56,7 +56,7 @@ $error = false;
  * The next argument could be -d to signal debug mode where lots of
  * extra information is printed out when the image is parsed.
  */
-if (isset($argv[0]) && $argv[0] == '-d') {
+if (isset($argv[0]) && $argv[0] === '-d') {
     Pel::setDebug(true);
     array_shift($argv);
 }
@@ -136,7 +136,7 @@ if (PelJpeg::isValid($data)) {
      */
     $exif = $jpeg->getExif();
 
-    if ($exif == null) {
+    if ($exif === null) {
         /*
          * Ups, there is no APP1 section in the JPEG file. This is where
          * the Exif data should be.
@@ -190,7 +190,7 @@ if (PelJpeg::isValid($data)) {
  */
 $ifd0 = $tiff->getIfd();
 
-if ($ifd0 == null) {
+if ($ifd0 === null) {
     /*
      * No IFD in the TIFF data? This probably means that the image
      * didn't have any Exif information to start with, and so an empty
@@ -210,7 +210,7 @@ if ($ifd0 == null) {
 $desc = $ifd0->getEntry(PelTag::IMAGE_DESCRIPTION);
 
 /* We need to check if the image already had a description stored. */
-if ($desc == null) {
+if ($desc === null) {
     /* The was no description in the image. */
     println('Added new IMAGE_DESCRIPTION entry with "%s".', $description);
 

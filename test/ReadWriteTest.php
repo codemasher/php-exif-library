@@ -101,7 +101,7 @@ class ReadWriteTest extends TestCase
 
         foreach ($entries as $entry) {
             $ifdEntry = $ifd->getEntry($entry->getTag());
-            if ($ifdEntry->getFormat() == PelFormat::ASCII) {
+            if ($ifdEntry->getFormat() === PelFormat::ASCII) {
                 $ifdValue = $ifd->getEntry($entry->getTag())
                     ->getValue();
                 $entryValue = $entry->getValue();

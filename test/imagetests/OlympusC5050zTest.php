@@ -383,6 +383,6 @@ class OlympusC5050zTest extends TestCase
         $this->assertNull($ifd2);
         /* End of IFD $ifd1. */
 
-        $this->assertTrue(count(Pel::getExceptions()) == 0);
+        $this->assertTrue(count(Pel::getExceptions()) === 0);
     }
 }

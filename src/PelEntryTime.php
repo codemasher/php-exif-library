@@ -240,7 +240,7 @@ class PelEntryTime extends PelEntryAscii
     public function convertGregorianToJd(int $year, int $month, int $day):int
     {
         // Special case mapping 0/0/0 -> 0
-        if ($year == 0 || $month == 0 || $day == 0) {
+        if ($year === 0 || $month === 0 || $day === 0) {
             return 0;
         }
 
@@ -258,7 +258,7 @@ class PelEntryTime extends PelEntryAscii
     public function convertJdToGregorian(int $jd):array
     {
         // Special case mapping 0 -> 0/0/0
-        if ($jd == 0) {
+        if ($jd === 0) {
             return [
                 0,
                 0,

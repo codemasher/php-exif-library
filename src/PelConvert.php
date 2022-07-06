@@ -85,7 +85,7 @@ class PelConvert
      */
     public static function shortToBytes(int $value, bool $endian):string
     {
-        if ($endian == self::LITTLE_ENDIAN) {
+        if ($endian === self::LITTLE_ENDIAN) {
             return chr($value) . chr($value >> 8);
         } else {
             return chr($value >> 8) . chr($value);
@@ -141,7 +141,7 @@ class PelConvert
          * handles such big numbers.
          */
         $hex = str_pad(base_convert((string)$value, 10, 16), 8, '0', STR_PAD_LEFT);
-        if ($endian == self::LITTLE_ENDIAN) {
+        if ($endian === self::LITTLE_ENDIAN) {
             return chr((int) hexdec($hex[6] . $hex[7])) . chr((int) hexdec($hex[4] . $hex[5])) . chr((int) hexdec($hex[2] . $hex[3])) . chr((int) hexdec($hex[0] . $hex[1]));
         } else {
             return chr((int) hexdec($hex[0] . $hex[1])) . chr((int) hexdec($hex[2] . $hex[3])) . chr((int) hexdec($hex[4] . $hex[5])) . chr((int) hexdec($hex[6] . $hex[7]));
@@ -168,7 +168,7 @@ class PelConvert
          * longToBytes) because PHP automatically handles 32 bit signed
          * integers for us.
          */
-        if ($endian == self::LITTLE_ENDIAN) {
+        if ($endian === self::LITTLE_ENDIAN) {
             return (chr($value) . chr($value >> 8) . chr($value >> 16) . chr($value >> 24));
         } else {
             return (chr($value >> 24) . chr($value >> 16) . chr($value >> 8) . chr($value));
@@ -231,7 +231,7 @@ class PelConvert
      */
     public static function bytesToShort(string $bytes, int $offset, bool $endian):int
     {
-        if ($endian == self::LITTLE_ENDIAN) {
+        if ($endian === self::LITTLE_ENDIAN) {
             return (ord($bytes[$offset + 1]) * 256 + ord($bytes[$offset]));
         } else {
             return (ord($bytes[$offset]) * 256 + ord($bytes[$offset + 1]));
@@ -280,7 +280,7 @@ class PelConvert
      */
     public static function bytesToLong(string $bytes, int $offset, bool $endian):int
     {
-        if ($endian == self::LITTLE_ENDIAN) {
+        if ($endian === self::LITTLE_ENDIAN) {
             return (ord($bytes[$offset + 3]) * 16777216 + ord($bytes[$offset + 2]) * 65536 + ord($bytes[$offset + 1]) * 256 + ord($bytes[$offset]));
         } else {
             return (ord($bytes[$offset]) * 16777216 + ord($bytes[$offset + 1]) * 65536 + ord($bytes[$offset + 2]) * 256 + ord($bytes[$offset + 3]));
@@ -385,7 +385,7 @@ class PelConvert
         for ($i = 0; $i < $s; $i ++) {
             printf('%02X ', ord($bytes[$i]));
 
-            if (($i + 1) % $line == 0) {
+            if (($i + 1) % $line === 0) {
                 print("\n");
             }
         }

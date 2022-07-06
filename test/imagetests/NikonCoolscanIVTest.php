@@ -161,6 +161,6 @@ class NikonCoolscanIVTest extends TestCase
         $this->assertNull($ifd1);
         /* End of IFD $ifd0. */
 
-        $this->assertTrue(count(Pel::getExceptions()) == 0);
+        $this->assertTrue(count(Pel::getExceptions()) === 0);
     }
 }
